@@ -1,0 +1,15 @@
+<div ng-show="error">
+    There was a problem logging in. Please try again.
+</div>
+
+<form role="form" ng-submit="login()">
+    <div style="display: block">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" ng-model="credentials.username"/>
+    </div>
+    <div style="display: block">
+        <label for="username">Password:</label>
+        <input type="password" id="password" name="password" ng-model="credentials.password"/>
+    </div>
+    <button type="submit">Submit</button>
+</form>
