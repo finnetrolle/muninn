@@ -13,6 +13,8 @@ import org.springframework.data.geo.Point;
 import org.springframework.data.geo.Polygon;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CsrfFilter;
 import ru.trollsmedjan.muninn.filters.CsrfHeaderFilter;
 import ru.trollsmedjan.muninn.model.Company;
@@ -35,8 +37,6 @@ public class Muninn implements CommandLineRunner {
         SpringApplication.run(Muninn.class, args);
     }
 
-
-
     @Autowired
     private CompanyDao companyDao;
 
@@ -45,6 +45,9 @@ public class Muninn implements CommandLineRunner {
 
     @Autowired
     private PowerSourceDao powerSourceDao;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... strings) throws Exception {
@@ -58,7 +61,8 @@ public class Muninn implements CommandLineRunner {
         user.setAuthority("ROLE_ADMIN");
         user.setCompany(company);
         user.setEmail("vasil@mail.ru");
-        user.setPassword("helloworld");
+        user.setPassword(passwordEncoder.encode("helloworld"));
+        user.setEnabled(true);
         userDao.save(user);
         System.out.println(user);
 
