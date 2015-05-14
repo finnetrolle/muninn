@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -31,8 +32,9 @@ import java.util.List;
  */
 @Configuration
 @EnableGlobalMethodSecurity(securedEnabled = true)
-@EnableAutoConfiguration
-@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
+//@EnableAutoConfiguration
+//@EnableWebMvcSecurity
+//@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -40,29 +42,43 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .httpBasic().and()
-                .authorizeRequests()
-                .antMatchers("/index.html", "/views/home.html", "/views/login.html", "/")
-                .permitAll().anyRequest()
-                .authenticated().and()
-                .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
-                .csrf().csrfTokenRepository(csrfTokenRepository())
-        .and().logout().logoutSuccessUrl("/")
+        http.authorizeRequests()
+                .antMatchers("/", "/index.html", "/views/login.html", "/views/home.html")
+                .permitAll()
+                .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .loginPage("/login/")
-                .loginProcessingUrl("/login")
-                .failureUrl("/")
-                .permitAll();
-                ;
+            .formLogin()
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .loginPage("/login")
+                .defaultSuccessUrl("/")
+                .permitAll()
+                .and()
+            .logout()
+                .permitAll()
+                .and()
+            .csrf()
+                .disable();
+
+
+//        http
+//                .httpBasic()
+//                .and()
+//                .authorizeRequests()
+//                .antMatchers("/index.html", "/views/home.html", "/views/login.html", "/")
+//                .permitAll().anyRequest()
+//                .authenticated().and()
+//                .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
+//                .csrf().csrfTokenRepository(csrfTokenRepository())
+//        .and().logout().logoutSuccessUrl("/")
 //                .and()
 //                .formLogin()
-//                .loginPage("/login")
-//                .permitAll()
-//                .and()
-//                .logout()
+//                .loginPage("/login/")
+//                .loginProcessingUrl("/login")
+//                .failureUrl("/")
 //                .permitAll();
+
+
     }
 
     @Override
@@ -72,22 +88,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(passwordEncoder())
                 .usersByUsernameQuery("Select email, password, enabled from users where email=?")
                 .authoritiesByUsernameQuery("select email, authority from users where email=?");
-
-//        JdbcUserDetailsManager userDetailsService = new JdbcUserDetailsManager();
-//        userDetailsService.setDataSource(dataSource);
-//        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//
-//        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
-//        auth.jdbcAuthentication().dataSource(dataSource)
-//                .usersByUsernameQuery("Select email, password, enabled from users where email=?")
-//                .authoritiesByUsernameQuery("select email, authority from users where email=?");
-//
-//        if (!userDetailsService.userExists("user")) {
-//            List<GrantedAuthority> authorities = new ArrayList<>();
-//            authorities.add(new SimpleGrantedAuthority("USER"));
-//            User userDetails = new User("user", passwordEncoder.encode("user"), authorities);
-//            userDetailsService.createUser(userDetails);
-//        }
     }
 
     @Bean
