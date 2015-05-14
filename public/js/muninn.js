@@ -76,6 +76,18 @@ muninnApp.controller('navigationController', ['$rootScope', '$scope', '$http', '
             });
         };
 
+        $scope.login2 = function() {
+            $http.post('login', {username: $scope.credentials.username, password: $scope.credentials.password})
+                .success(function(data){
+                    console.log("success");
+                    console.log(data);
+                })
+                .error(function(data){
+                    console.log("failed");
+                    console.log(data);
+                });
+        }
+
 
 
         // continue with https://spring.io/guides/tutorials/spring-security-and-angular-js/

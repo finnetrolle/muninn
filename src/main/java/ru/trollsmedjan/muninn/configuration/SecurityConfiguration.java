@@ -49,6 +49,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
                 .csrf().csrfTokenRepository(csrfTokenRepository())
         .and().logout().logoutSuccessUrl("/")
+                .and()
+                .formLogin()
+                .loginPage("/login/")
+                .loginProcessingUrl("/login")
+                .failureUrl("/")
+                .permitAll();
                 ;
 //                .and()
 //                .formLogin()
