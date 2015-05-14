@@ -49,6 +49,7 @@ muninnApp.controller('navigationController', ['$rootScope', '$scope', '$http', '
                 });
         }
 
+        console.log($scope.credentials);
         authenticate();
         $scope.credentials = {};
         $scope.login = function () {
@@ -64,13 +65,18 @@ muninnApp.controller('navigationController', ['$rootScope', '$scope', '$http', '
         };
 
         $scope.logout = function() {
+            //$http.post('logout', {}).success(function() {
             $http.post('logout', {}).success(function() {
                 $rootScope.authenticated = false;
                 $location.path("/");
             }).error(function(data) {
+                alert(data);
+                console.log(data);
                 $rootScope.authenticated = false;
             });
         };
+
+
 
         // continue with https://spring.io/guides/tutorials/spring-security-and-angular-js/
 

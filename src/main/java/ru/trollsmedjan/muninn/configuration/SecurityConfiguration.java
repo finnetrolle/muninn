@@ -1,11 +1,13 @@
 package ru.trollsmedjan.muninn.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.GrantedAuthority;
@@ -28,6 +30,8 @@ import java.util.List;
  * Created by syachin on 14.05.2015.
  */
 @Configuration
+@EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableAutoConfiguration
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
@@ -43,7 +47,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .permitAll().anyRequest()
                 .authenticated().and()
                 .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
-                .csrf().csrfTokenRepository(csrfTokenRepository());
+                .csrf().csrfTokenRepository(csrfTokenRepository())
+        .and().logout().logoutSuccessUrl("/")
+                ;
+//                .and()
+//                .formLogin()
+//                .loginPage("/login")
+//                .permitAll()
+//                .and()
+//                .logout()
+//                .permitAll();
     }
 
     @Override

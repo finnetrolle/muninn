@@ -58,9 +58,19 @@ public class Muninn implements CommandLineRunner {
 
         User user = new User();
         user.setName("Васильков Петр Прохорович");
-        user.setAuthority("ROLE_ADMIN");
+        user.setAuthority("ROLE_USER");
         user.setCompany(company);
         user.setEmail("vasil@mail.ru");
+        user.setPassword(passwordEncoder.encode("helloworld"));
+        user.setEnabled(true);
+        userDao.save(user);
+        System.out.println(user);
+
+        user = new User();
+        user.setName("Архаров Модест Павлович");
+        user.setAuthority("ROLE_ADMIN");
+        user.setCompany(company);
+        user.setEmail("admin@mail.ru");
         user.setPassword(passwordEncoder.encode("helloworld"));
         user.setEnabled(true);
         userDao.save(user);

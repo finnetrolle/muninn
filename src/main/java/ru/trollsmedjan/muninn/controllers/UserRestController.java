@@ -1,10 +1,9 @@
 package ru.trollsmedjan.muninn.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.*;
 import ru.trollsmedjan.muninn.model.User;
 import ru.trollsmedjan.muninn.model.dao.CompanyDao;
 import ru.trollsmedjan.muninn.model.dao.UserDao;
@@ -24,13 +23,38 @@ public class UserRestController {
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @RequestMapping
     public Principal user(Principal user) {
+        System.out.println("logged in: " + user.getName());
         return user;
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public void registerUser(@RequestBody User user) {
-
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setEnabled(false);
+        userDao.save(user);
     }
+
+    @Secured("ROLE_ADMIN")
+    @RequestMapping(value = "/{email}/enable")
+    public void enableUser(@PathVariable String email) {
+        User user = userDao.findOne(email);
+        if (user != null) {
+            user.setEnabled(true);
+            userDao.save(user);
+        }
+    }
+
+    @Secured("ROLE_ADMIN")
+    @RequestMapping("/securetest")
+    public @ResponseBody
+    String greeting() {
+        return "Greetings to admin!";
+    }
+
+
 }
