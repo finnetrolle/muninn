@@ -9,6 +9,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.core.GrantedAuthority;
@@ -32,6 +33,7 @@ import java.util.List;
  */
 @Configuration
 @EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableWebSecurity
 //@EnableAutoConfiguration
 //@EnableWebMvcSecurity
 //@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
@@ -42,23 +44,41 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/", "/index.html", "/views/login.html", "/views/home.html")
-                .permitAll()
-                .anyRequest().authenticated()
-                .and()
-            .formLogin()
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .loginPage("/login")
-                .defaultSuccessUrl("/")
-                .permitAll()
-                .and()
-            .logout()
-                .permitAll()
-                .and()
-            .csrf()
-                .disable();
+        http
+                .authorizeRequests()
+                    //.antMatchers("/", "/index.html", "/js**", "/views/**")
+                    .anyRequest()
+                    .permitAll()
+                    .and()
+                .formLogin()
+                    .loginPage("/login")
+                    .failureUrl("/login?error")
+                    .usernameParameter("username")
+                    .passwordParameter("password")
+                    .and()
+                .logout()
+                    .logoutSuccessUrl("/")
+                    .and()
+                .csrf()
+                    .disable();
+
+//        http.authorizeRequests()
+//                .antMatchers("/", "/index.html", "/views/login.html", "/views/home.html")
+//                .permitAll()
+//                .anyRequest().authenticated()
+//                .and()
+//            .formLogin()
+//                .usernameParameter("username")
+//                .passwordParameter("password")
+//                .loginPage("/login")
+//                .defaultSuccessUrl("/")
+//                .permitAll()
+//                .and()
+//            .logout()
+//                .permitAll()
+//                .and()
+//            .csrf()
+//                .disable();
 
 
 //        http
@@ -80,6 +100,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
     }
+
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

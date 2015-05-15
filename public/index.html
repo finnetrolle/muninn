@@ -6,6 +6,8 @@
     <script src="https://code.angularjs.org/1.4.0-rc.1/angular-route.js"></script>
     <script src="https://code.angularjs.org/1.4.0-rc.1/angular-resource.js"></script>
     <script src="js/muninn.js"></script>
+    <script src="js/controllers/authController.js"></script>
+    <script src="js/services/authService.js"></script>
 
     <style type="text/css">
         [ng\:cloak], [ng-cloak], .ng-cloak {
@@ -20,7 +22,7 @@
         <ul role="tablist">
             <li><a href="#/">home</a></li>
             <li><a href="#/login">login</a></li>
-            <li ng-show="authenticated"><a href="" ng-click="logout()">logout</a></li>
+            <li ng-show="authenticated" ng-controller="authController"><a href="" ng-click="logout()">logout</a></li>
         </ul>
     </div>
 

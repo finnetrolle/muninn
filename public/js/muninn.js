@@ -12,7 +12,7 @@ muninnApp.config(function ($routeProvider, $httpProvider) {
         })
         .when('/login', {
             templateUrl: 'views/login.html',
-            controller: 'navigationController'
+            controller: 'authController'
         })
         .otherwise('/');
 
@@ -77,16 +77,51 @@ muninnApp.controller('navigationController', ['$rootScope', '$scope', '$http', '
         };
 
         $scope.login2 = function() {
-            $http.post('login', {username: $scope.credentials.username, password: $scope.credentials.password})
+            var payload = 'username=' + $scope.credentials.username + '&password=' + $scope.credentials.password;
+            var config = {
+                headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+            }
+            $http.post('login', payload, config)
                 .success(function(data){
-                    console.log("success");
+                    console.log("Login success");
                     console.log(data);
-                })
-                .error(function(data){
-                    console.log("failed");
+                }).error(function(data){
+                    console.log("Login failed");
                     console.log(data);
                 });
-        }
+            //
+            //
+            //var request = {
+            //    method: 'POST',
+            //    url: 'login',
+            //    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            //    data: $.param({
+            //        username: $scope.credentials.username,
+            //        password: $scope.credentials.password
+            //    })
+            //};
+            //
+            ////$http.post('login', {username: $scope.credentials.username, password: $scope.credentials.password})
+            //$http(request)
+            //    .success(function(data){
+            //        console.log("success");
+            //        console.log(data);
+            //    })
+            //    .error(function(data){
+            //        console.log("failed");
+            //        console.log(data);
+            //    });
+        };
+
+        $scope.logout2 = function() {
+            $http.post('logout', {}).success(function(data){
+                console.log("logout success");
+                console.log(data);
+            }).error(function(data){
+                console.log("logout failed");
+                console.log(data);
+            });
+        };
 
 
 

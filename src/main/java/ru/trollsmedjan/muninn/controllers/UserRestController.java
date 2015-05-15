@@ -26,8 +26,12 @@ public class UserRestController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+
+
     @RequestMapping
     public Principal user(Principal user) {
+        if (user == null)
+            return null;
         System.out.println("logged in: " + user.getName());
         return user;
     }
