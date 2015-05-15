@@ -6,48 +6,49 @@ muninnApp.controller('authController',
     ['$scope', 'authService', '$rootScope',
         function ($scope, authService, $rootScope) {
 
+            // root auth variables
             $rootScope.authenticated = false;
             $rootScope.user = null;
+
+            // input fields
             $scope.username = null;
             $scope.password = null;
 
+            /**
+             * Method
+             */
             $scope.login = function() {
                 authService.login($scope.username, $scope.password)
                     .success(function(data){
-                        console.log("login success");
-                        console.log(data);
-                    })
-                    .error(function(data){
-                        console.log("login failed");
-                        console.log(data);
+                        $scope.checkAuth();
                     });
+                $scope.username = '';
+                $scope.password = '';
             };
 
             $scope.logout = function() {
                 authService.logout()
                     .success(function(data){
-                        $rootScope.user = null;
-                        console.log("logout success");
-                    })
-                    .error(function(date){
-                        console.log("logout failed");
+                        $scope.checkAuth();
                     });
             };
 
             $scope.checkAuth = function() {
                 authService.check()
                     .success(function(data){
-                        if (data == undefined || data == null) {
-                            console.log("auth = false");
-                            console.log(data);
+                        if (data.name == null) {
+                            console.log("auth = false by data.name==null");
+                            $rootScope.user = null;
+                            $rootScope.authenticated = false;
                         } else {
                             console.log("auth = true");
                             console.log(data);
                             $rootScope.user = data.name;
+                            $rootScope.authenticated = true;
                         }
                     })
                     .error(function(data){
-                        console.log("auth = false");
+                        console.log("auth = false by error");
                         console.log(data);
                     });
             }
