@@ -1,11 +1,10 @@
 package ru.trollsmedjan.muninn.controllers;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by syachin on 14.05.2015.
@@ -21,5 +20,6 @@ public class TestRestController {
         model.put("content", "Hello, World!");
         return model;
     }
+
 
 }

@@ -14,16 +14,18 @@ muninnApp.controller('authController',
             $scope.username = null;
             $scope.password = null;
 
-            /**
-             * Method
-             */
+            $scope.resetAuth = function() {
+                $scope.username = '';
+                $scope.password = '';
+                $rootScope.authenticated = false;
+                $rootScope.user = null;
+            }
+
             $scope.login = function() {
                 authService.login($scope.username, $scope.password)
                     .success(function(data){
                         $scope.checkAuth();
                     });
-                $scope.username = '';
-                $scope.password = '';
             };
 
             $scope.logout = function() {
@@ -36,20 +38,15 @@ muninnApp.controller('authController',
             $scope.checkAuth = function() {
                 authService.check()
                     .success(function(data){
-                        if (data.name == null) {
-                            console.log("auth = false by data.name==null");
-                            $rootScope.user = null;
-                            $rootScope.authenticated = false;
+                        if (data.name == null) { // failed by checkauth
+                            $scope.resetAuth();
                         } else {
-                            console.log("auth = true");
-                            console.log(data);
                             $rootScope.user = data.name;
                             $rootScope.authenticated = true;
                         }
                     })
                     .error(function(data){
-                        console.log("auth = false by error");
-                        console.log(data);
+                        $scope.resetAuth();
                     });
             }
             $scope.checkAuth();

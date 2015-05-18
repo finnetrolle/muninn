@@ -51,43 +51,55 @@ public class Muninn implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-        Company company = new Company();
-        company.setName("Олигарх инкорпорейтед");
-        companyDao.save(company);
-        System.out.println(company);
+//        Company company = userDao.findOne("admin@mail.ru").getCompany();
+//        for (int i = 0; i < 15; ++i) {
+//            User user = new User();
+//            user.setCompany(company);
+//            user.setEmail("user" + i + "@mail.ru");
+//            user.setName("User " + i + " Userovich");
+//            user.setEnabled(true);
+//            user.setPassword(passwordEncoder.encode("helloworld"));
+//            user.setAuthority("ROLE_USER");
+//            userDao.save(user);
+//        }
 
-        User user = new User();
-        user.setName("Васильков Петр Прохорович");
-        user.setAuthority("ROLE_USER");
-        user.setCompany(company);
-        user.setEmail("vasil@mail.ru");
-        user.setPassword(passwordEncoder.encode("helloworld"));
-        user.setEnabled(true);
-        userDao.save(user);
-        System.out.println(user);
-
-        user = new User();
-        user.setName("Архаров Модест Павлович");
-        user.setAuthority("ROLE_ADMIN");
-        user.setCompany(company);
-        user.setEmail("admin@mail.ru");
-        user.setPassword(passwordEncoder.encode("helloworld"));
-        user.setEnabled(true);
-        userDao.save(user);
-        System.out.println(user);
-
-        PowerSource powerSource = new PowerSource();
-        powerSource.setCompany(company);
-        powerSource.setLocation(new Point(59.0, 30.0));
-        powerSource.setPolygon(new Polygon(
-                new Point(59.0, 30.0),
-                new Point(60.0, 30.0),
-                new Point(59.0, 31.0),
-                new Point(59.0, 30.0)));
-        powerSource.setName("ПС СПБ");
-        powerSource.setUsedPower(50);
-        powerSource.setPower("110/75/50");
-        powerSourceDao.save(powerSource);
-        System.out.println(powerSource);
+//        Company company = new Company();
+//        company.setName("Олигарх инкорпорейтед");
+//        companyDao.save(company);
+//        System.out.println(company);
+//
+//        User user = new User();
+//        user.setName("Васильков Петр Прохорович");
+//        user.setAuthority("ROLE_USER");
+//        user.setCompany(company);
+//        user.setEmail("vasil@mail.ru");
+//        user.setPassword(passwordEncoder.encode("helloworld"));
+//        user.setEnabled(true);
+//        userDao.save(user);
+//        System.out.println(user);
+//
+//        user = new User();
+//        user.setName("Архаров Модест Павлович");
+//        user.setAuthority("ROLE_ADMIN");
+//        user.setCompany(company);
+//        user.setEmail("admin@mail.ru");
+//        user.setPassword(passwordEncoder.encode("helloworld"));
+//        user.setEnabled(true);
+//        userDao.save(user);
+//        System.out.println(user);
+//
+//        PowerSource powerSource = new PowerSource();
+//        powerSource.setCompany(company);
+//        powerSource.setLocation(new Point(59.0, 30.0));
+//        powerSource.setPolygon(new Polygon(
+//                new Point(59.0, 30.0),
+//                new Point(60.0, 30.0),
+//                new Point(59.0, 31.0),
+//                new Point(59.0, 30.0)));
+//        powerSource.setName("ПС СПБ");
+//        powerSource.setUsedPower(50);
+//        powerSource.setPower("110/75/50");
+//        powerSourceDao.save(powerSource);
+//        System.out.println(powerSource);
     }
 }

@@ -26,14 +26,15 @@ public class UserRestController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-
-
+    @Secured("ROLE_ADMIN")
     @RequestMapping
-    public Principal user(Principal user) {
-        if (user == null)
+    public @ResponseBody
+    Iterable<User> getUsersForCompany(Principal user) {
+        if (user == null) {
             return null;
-        System.out.println("logged in: " + user.getName());
-        return user;
+        }
+        User currentUser = userDao.findOne(user.getName());
+        return userDao.findByCompany(currentUser.getCompany());
     }
 
     @RequestMapping(method = RequestMethod.POST)

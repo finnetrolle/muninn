@@ -14,6 +14,10 @@ muninnApp.config(function ($routeProvider, $httpProvider) {
             templateUrl: 'views/login.html',
             controller: 'authController'
         })
+        .when('/users', {
+            templateUrl: 'views/users.html',
+            controller: 'userController'
+        })
         .otherwise('/');
 
     $httpProvider.defaults.headers.common["X-requested-With"] = 'XMLHttpRequest';

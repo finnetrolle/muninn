@@ -1,0 +1,31 @@
+<div>
+    <h3>Users</h3>
+
+    <div class="window-container">
+        <div class="window-title">
+            Управление пользователями
+        </div>
+
+        <div class="window-toolbar">
+            <div style="position: relative">
+                <img class="image f-left" src="img/icon_search_active.png">
+                <input class="toolbar-search" type="text" placeholder="Имя пользователя">
+                <img class="image f-right" src="img/icon_plus.png">
+            </div>
+            <div style="margin: 5px 0px 0px 0px; border-top: solid 1px #60bd1f; border-bottom: none;"></div>
+        </div>
+
+        <div class="window-content">
+
+            <div class="user-container" ng-repeat="user in users">
+                <div class="username">
+                    <img class="f-left image" src="img/icon_user.png">
+                    {{ user.name }}
+                    <img class="f-right image" src="img/icon_delete.png">
+                </div>
+                <div class="userrole">{{ user.authority }}</div>
+            </div>
+
+        </div>
+    </div>
+</div>
