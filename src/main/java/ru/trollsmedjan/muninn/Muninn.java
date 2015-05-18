@@ -24,6 +24,9 @@ import ru.trollsmedjan.muninn.model.dao.CompanyDao;
 import ru.trollsmedjan.muninn.model.dao.PowerSourceDao;
 import ru.trollsmedjan.muninn.model.dao.UserDao;
 
+import java.util.Formatter;
+import java.util.Locale;
+
 /**
  * Created by syachin on 14.05.2015.
  */
@@ -51,6 +54,8 @@ public class Muninn implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
+
+
 //        Company company = userDao.findOne("admin@mail.ru").getCompany();
 //        for (int i = 0; i < 15; ++i) {
 //            User user = new User();

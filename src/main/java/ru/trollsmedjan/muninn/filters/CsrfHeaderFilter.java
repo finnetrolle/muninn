@@ -28,6 +28,7 @@ public class CsrfHeaderFilter extends OncePerRequestFilter {
                 cookie.setPath("/");
                 response.addCookie(cookie);
             }
+
         }
         filterChain.doFilter(request, response);
     }
