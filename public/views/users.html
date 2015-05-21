@@ -9,7 +9,7 @@
         <div class="window-toolbar">
             <div style="position: relative">
                 <img class="image f-left" src="img/icon_search_active.png">
-                <input class="toolbar-search" type="text" placeholder="Имя пользователя">
+                <input class="toolbar-search" type="text" placeholder="Имя пользователя" ng-change="doFilterUsers(filterString)" ng-model="filterString">
                 <img class="image f-right" src="img/icon_plus.png">
             </div>
             <div style="margin: 5px 0px 0px 0px; border-top: solid 1px #60bd1f; border-bottom: none;"></div>
@@ -17,7 +17,7 @@
 
         <div class="window-content">
 
-            <div class="user-container" ng-repeat="user in users">
+            <div class="user-container" ng-repeat="user in usersViewModel">
                 <div class="username">
                     <img class="f-left image" src="img/icon_user.png">
                     {{ user.name }}
