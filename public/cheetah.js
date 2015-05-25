@@ -48,6 +48,8 @@ var mapController = cheetahApp.controller('mapController',
         ['$scope', 'powerSourceService', 'leafletEvents', 'modelService', 'leafletData', 'editableEventingService', '$rootScope', 'iconService', 'filterService', 'tilesService',
             function ($scope, powerSourceService, leafletEvents, modelService, leafletData, editableEventingService, $rootScope, iconService, filterService, tilesService) {
 
+                powerSourceService.setCompanyId('a991709d-8bbc-409f-ba25-81e69647abd7');
+
                 $scope.ui = {
                     showPowerSourcesList: false,
                     showStandalonePanel: false,

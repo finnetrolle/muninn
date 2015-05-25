@@ -4,6 +4,7 @@ package ru.trollsmedjan.muninn.model;
 import org.springframework.data.geo.Point;
 import org.springframework.data.geo.Polygon;
 
+
 import javax.persistence.*;
 
 /**
@@ -24,7 +25,7 @@ public class PowerSource {
     private double usedPower;
 
     @Transient
-    private Polygon polygon = new Polygon(new Point(0,0), new Point(0,0), new Point(0,0));
+    private Polygon polygon = null;
 
 //    @Transient
     private Point location = new Point(0, 0);

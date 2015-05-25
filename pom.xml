@@ -43,6 +43,12 @@
             <version>3.10-FINAL</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.vividsolutions</groupId>
+            <artifactId>jts</artifactId>
+            <version>1.13</version>
+        </dependency>
+
     </dependencies>
 
     <properties>

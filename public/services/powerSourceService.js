@@ -6,6 +6,10 @@ cheetahApp.service('powerSourceService', ["$http", "iconService", function ($htt
 
     var powerSourceService = {
 
+        setCompanyId: function(companyId) {
+            this.companyId = companyId;
+        },
+
         getPowerSource: function (id) {
             //var promise = $http.get('http://trollsmedjan.ru:8080/burst/rest_read_attributes',
             //    {
@@ -25,7 +29,7 @@ cheetahApp.service('powerSourceService', ["$http", "iconService", function ($htt
 
         getPowerSourcesMarkers: function () {
             //var promise = $http.get('http://trollsmedjan.ru:8080/burst/rest_read_powersources')
-            var promise = $http.get('/powersource/a466ce29-90b6-4d8e-baeb-69716d7807e4')
+            var promise = $http.get('/powersource/' + this.companyId)
                 .then(function (response) {
                     var markers = {};
                     //var src = response.data.powerSources;
