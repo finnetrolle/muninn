@@ -45,10 +45,14 @@ var tilesDict = [
 
 
 var mapController = cheetahApp.controller('mapController',
-        ['$scope', 'powerSourceService', 'leafletEvents', 'modelService', 'leafletData', 'editableEventingService', '$rootScope', 'iconService', 'universalFilterService', 'tilesService',
-            function ($scope, powerSourceService, leafletEvents, modelService, leafletData, editableEventingService, $rootScope, iconService, filter, tilesService) {
+        ['$scope', 'leafletEvents',
+         'leafletData', 'editableEventingService', '$rootScope',
+         'iconService', 'universalFilterService', 'tilesService', 'markerAdapterService', 'restConnector',
+            function ($scope, leafletEvents,
+                      leafletData, editableEventingService, $rootScope,
+                      iconService, filter, tilesService, markerAdapterService, restConnector) {
 
-                powerSourceService.setCompanyId('a991709d-8bbc-409f-ba25-81e69647abd7');
+                restConnector.setCompanyId('a991709d-8bbc-409f-ba25-81e69647abd7');
 
                 $scope.ui = {
                     showPowerSourcesList: false,
@@ -85,13 +89,9 @@ var mapController = cheetahApp.controller('mapController',
                  */
                 $scope.filterPowerSourcesList = function () {
                     if ($scope.ui.searchInputString.length == 0) {
-                        //$scope.viewModel.powerSources = filter.createFilteredMap($scope.model.powerSources, "name");
                         $scope.viewModel.powerSources = filter.filter($scope.model.powerSources);
-                        //$scope.viewModel.powerSources = filterService.createFilteredPowerSourcesMap($scope.model.powerSources);
                     } else {
-                        //$scope.viewModel.powerSources = filter.createFilteredMap($scope.model.powerSources, "name", $scope.ui.searchInputString);
                         $scope.viewModel.powerSources = filter.filter($scope.model.powerSources, $scope.ui.searchInputString, ["name"]);
-                        //$scope.viewModel.powerSources = filterService.createFilteredPowerSourcesMap($scope.model.powerSources, $scope.ui.searchInputString);
                     }
                 };
 
@@ -99,12 +99,15 @@ var mapController = cheetahApp.controller('mapController',
                  *
                  */
                 $scope.updatePowerSources = function () {
-                    powerSourceService.getPowerSourcesMarkers().then(function (data) {
-                        $scope.model.powerSources = data;
-                        //$scope.viewModel.powerSources = filterService.createFilteredPowerSourcesMap(data);
-                        //$scope.viewModel.powerSources = filter.createFilteredMap($scope.model.powerSources, "name");
-                        $scope.viewModel.powerSources = filter.filter($scope.model.powerSources);
+                    restConnector.getPowerSources().success(function(powerSourcesArray){
+                        $scope.model.powerSources = markerAdapterService.createMarkers(powerSourcesArray);
+                        $scope.viewModel.powerSources = $scope.model.powerSources;
+                        $scope.ui.searchInputString = '';
                     });
+                    //powerSourceService.getPowerSourcesMarkers().then(function (data) {
+                    //    $scope.model.powerSources = data;
+                    //    $scope.viewModel.powerSources = filter.filter($scope.model.powerSources);
+                    //});
                 };
 
                 /**
@@ -133,11 +136,15 @@ var mapController = cheetahApp.controller('mapController',
 
                     $scope.ui.selectedPowerSourceId = id;
                     $scope.viewModel.selected.powerSource = $scope.model.powerSources['' + id];
-                    powerSourceService.getPowerSource(id).then(function (data) {
-                        $scope.viewModel.selected.attributes = data;
-                        //$scope.viewModel.selected.attributes = data.attributes;
-                        //$scope.viewModel.selected.documents = data.documents;
+                    restConnector.getAttributes(id).success(function(attributes){
+                        $scope.viewModel.selected.attributes = attributes;
                     });
+
+                    //powerSourceService.getPowerSource(id).then(function (data) {
+                    //    $scope.viewModel.selected.attributes = data;
+                    //    //$scope.viewModel.selected.attributes = data.attributes;
+                    //    //$scope.viewModel.selected.documents = data.documents;
+                    //});
 
                     // center map
                     $scope.initialCenter.lat = $scope.viewModel.selected.powerSource.lat;
@@ -243,19 +250,19 @@ var mapController = cheetahApp.controller('mapController',
 
 
 
-                leafletData.getMap().then(function (map) {
-                    $scope.map = map;
-
-                    editableEventingService.initEvents(map, $scope);
-
-                    powerSourceService.getPowerSourcesMarkers().then(function (data) {
-                        $scope.markers = data;
-
-                        var lGroup = modelService.init(data);
-                        lGroup.addTo($scope.map);
-                        $scope.powerSources = modelService.powerSources;
-                    });
-                });
+                //leafletData.getMap().then(function (map) {
+                //    $scope.map = map;
+                //
+                //    editableEventingService.initEvents(map, $scope);
+                //
+                //    powerSourceService.getPowerSourcesMarkers().then(function (data) {
+                //        $scope.markers = data;
+                //
+                //        var lGroup = modelService.init(data);
+                //        lGroup.addTo($scope.map);
+                //        $scope.powerSources = modelService.powerSources;
+                //    });
+                //});
 
                 //$scope.goToPowerSource = function (id) {
                 //    //for (var key in $scope.markers) {
@@ -285,8 +292,8 @@ var mapController = cheetahApp.controller('mapController',
                 //};
 
                 $scope.$on('leafletDirectiveMarker.popupopen', function (event, args) {
-                    modelService.popuppedMarkerId = args.model.id;
-                    modelService.getPowerSource(args.model.id);
+                    //modelService.popuppedMarkerId = args.model.id;
+                    //modelService.getPowerSource(args.model.id);
                 });
 
                 $scope.$on('leafletDirectiveMarker.popupclose', function (event, args) {
@@ -294,11 +301,11 @@ var mapController = cheetahApp.controller('mapController',
                 });
 
                 $scope.$on('leafletDirectiveMarker.mouseover', function (event, args) {
-                    modelService.showHighlightedLayer(args.model.id);
+                    //modelService.showHighlightedLayer(args.model.id);
                 });
 
                 $scope.$on('leafletDirectiveMarker.mouseout', function (event, args) {
-                    modelService.hideHighlightedLayer();
+                    //modelService.hideHighlightedLayer();
                 });
 
                 $scope.$on('editable:drawing:start', function (event, args) {
