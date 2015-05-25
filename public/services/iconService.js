@@ -41,11 +41,13 @@ cheetahApp.service('iconService', [function () {
                 }
             }
 
-            if (power == 11000) {
+            if (power == 110) {
                 filename += '_035';
-            } else if (power == 35000) { // todo change to actual
+            } else if (power == 35) { // todo change to actual
                 filename += '_035';
-            } else if (power == 75000) {
+            } else if (power == 75) {
+                filename += '_035';
+            } else {
                 filename += '_035';
             }
 
