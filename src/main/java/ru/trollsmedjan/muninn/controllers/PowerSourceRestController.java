@@ -10,6 +10,7 @@ import ru.trollsmedjan.muninn.model.PowerSource;
 import ru.trollsmedjan.muninn.model.dao.CompanyDao;
 import ru.trollsmedjan.muninn.model.dao.PowerSourceDao;
 
+import java.util.Iterator;
 import java.util.UUID;
 
 /**
@@ -24,6 +25,12 @@ public class PowerSourceRestController {
 
     @Autowired
     private CompanyDao companyDao;
+
+    @RequestMapping("/testall")
+    public @ResponseBody
+    Iterable<PowerSource> getAllPowerSources() {
+        return powerSourceDao.findAll();
+    }
 
     @RequestMapping("/{companyId}")
     public @ResponseBody

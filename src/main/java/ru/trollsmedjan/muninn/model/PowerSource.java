@@ -21,13 +21,13 @@ public class PowerSource {
 
     private String power;
 
-    private int usedPower;
+    private double usedPower;
 
     @Transient
-    private Polygon polygon;
+    private Polygon polygon = new Polygon(new Point(0,0), new Point(0,0), new Point(0,0));
 
-    @Transient
-    private Point location;
+//    @Transient
+    private Point location = new Point(0, 0);
 
     @ManyToOne
     private Company company;
@@ -57,7 +57,7 @@ public class PowerSource {
 
         PowerSource that = (PowerSource) o;
 
-        if (usedPower != that.usedPower) return false;
+        if (Double.compare(that.usedPower, usedPower) != 0) return false;
         if (company != null ? !company.equals(that.company) : that.company != null) return false;
         if (location != null ? !location.equals(that.location) : that.location != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
@@ -69,9 +69,12 @@ public class PowerSource {
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
+        int result;
+        long temp;
+        result = name != null ? name.hashCode() : 0;
         result = 31 * result + (power != null ? power.hashCode() : 0);
-        result = 31 * result + usedPower;
+        temp = Double.doubleToLongBits(usedPower);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (polygon != null ? polygon.hashCode() : 0);
         result = 31 * result + (location != null ? location.hashCode() : 0);
         result = 31 * result + (company != null ? company.hashCode() : 0);
@@ -103,11 +106,11 @@ public class PowerSource {
         this.power = power;
     }
 
-    public int getUsedPower() {
+    public double getUsedPower() {
         return usedPower;
     }
 
-    public void setUsedPower(int usedPower) {
+    public void setUsedPower(double usedPower) {
         this.usedPower = usedPower;
     }
 

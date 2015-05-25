@@ -1,40 +1,44 @@
-<!doctype html>
-<html>
-<head>
-    <title>Hello AngularJS</title>
+<!DOCTYPE html>
+<html ng-app="cheetahApp">
+<head lang="en">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=Edge">
+    <title>Cheetah Map for PowerSources</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <!--<link rel="stylesheet" href="css/leaflet.css">-->
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <link rel="stylesheet" href="css/leaflet-extender.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/ng-scrollbar.css">
+
+    <!--<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>-->
+    <script src="http://leaflet-cdn.s3.amazonaws.com/build/master/leaflet-src.js"></script>
+
     <script src="https://code.angularjs.org/1.4.0-rc.1/angular.js"></script>
     <script src="https://code.angularjs.org/1.4.0-rc.1/angular-route.js"></script>
     <script src="https://code.angularjs.org/1.4.0-rc.1/angular-resource.js"></script>
-    <script src="js/muninn.js"></script>
-    <script src="js/controllers/authController.js"></script>
-    <script src="js/services/authService.js"></script>
-    <script src="js/controllers/userController.js"></script>
-    <script src="js/services/userService.js"></script>
+    <script src="js/ng-scrollbar.js"></script>
+    <script src="js/angular-leaflet-directive.js"></script>
+    <script src="js/Leaflet.Editable.js"></script>
+    <script src="cheetah.js"></script>
+    <script src="routes.js"></script>
+    <script src="directives/powerSourceInfoPanel.js"></script>
+    <script src="directives/powerSourcesList.js"></script>
+    <script src="services/modelService.js"></script>
+    <script src="services/editableEventingService.js"></script>
+    <script src="services/powerSourceService.js"></script>
+    <script src="services/iconService.js"></script>
+    <script src="services/filterService.js"></script>
+    <script src="services/tilesService.js"></script>
+    <script src="controllers/baloonController.js"></script>
 
-    <link rel="stylesheet" href="css/main.css">
-
-    <style type="text/css">
-        [ng\:cloak], [ng-cloak], .ng-cloak {
-            display: none !important;
-        }
-    </style>
 </head>
+<body>
 
-<body ng-app="muninn" ng-cloak class="ng-cloak">
-
-    <div ng-controller="navigationController">
-        <ul role="tablist">
-            <li><a href="#/">home</a></li>
-            <li><a href="#/login">login</a></li>
-            <li ng-show="authenticated" ng-controller="authController"><a href="" ng-click="logout()">logout</a></li>
-        </ul>
-    </div>
-
-    <div ng-view></div>
-
-
-
-
+<div ng-view style="width: 100%; height: 100%; position: absolute;"></div>
 
 </body>
 </html>

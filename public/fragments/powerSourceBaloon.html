@@ -1,0 +1,48 @@
+<div class="psinfo" ng-controller="baloonController">
+    <div class="psinfoTitle">
+        {{ powerSource.name }}
+    </div>
+
+    <div class="psinfoContainer">
+        <div class="psinfoContainerTitle">
+            Общая информация
+        </div>
+        <table class="psinfo">
+            <tr>
+                <td class="psinfoName">Класс напряжения:</td>
+                <td class="psinfoValue">{{ powerSource.power }}</td>
+            </tr>
+            <tr>
+                <td class="psinfoName">Загрузка:</td>
+                <td class="psinfoValue">{{ powerSource.load }}</td>
+            </tr>
+            <tr ng-repeat="a in attributes">
+                <td class="psinfoName">
+                    {{ a.attributeType.name }}:
+                </td>
+                <td class="psinfoValue">
+                    {{ a.value }}
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!--<div class="psinfoContainer">-->
+    <!--<div class="psinfoContainerTitle">-->
+    <!--Документы-->
+    <!--</div>-->
+
+    <!--<table class="psinfo">-->
+    <!--<c:forEach var="document" items="${documents}">-->
+    <!--<tr>-->
+    <!--<td>-->
+    <!--<a target="_blank" class="psinfo" href="<c:out value='${document.link}'/>">-->
+    <!--<c:out value="${document.name}"/>-->
+    <!--</a>-->
+    <!--</td>-->
+    <!--</tr>-->
+    <!--</c:forEach>-->
+    <!--</table>-->
+    <!--</div>-->
+
+</div>

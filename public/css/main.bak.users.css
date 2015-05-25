@@ -1,0 +1,70 @@
+div.window-container {
+    padding: 0px;
+    border: solid 1px #139952;
+    background-color: #f0f0f0;
+    width: 310px;
+}
+
+div.window-title {
+    line-height: 20px;
+    background-color: #139952;
+    color: #f0f0f0;
+    padding: 5px 5px 5px 10px;
+    height: 20px;
+}
+
+div.window-toolbar {
+    /*padding: 5px;*/
+    padding: 5px 5px 0px 5px;
+    position: relative;
+}
+
+input.toolbar-search {
+    line-height: 16px;
+    padding: 5px 5px 5px 30px;
+    width: 225px;
+}
+
+div.window-content {
+    padding: 5px;
+    background-color: #f0f0f0;
+}
+
+div.user-container {
+    background-color: #60bd1f;
+    color: #f0f0f0;
+    width: 300px;
+    padding: 0px;
+    line-height: 30px;
+    margin-bottom: 5px;
+}
+
+img.image {
+    width: 30px;
+    height: 30px;
+}
+
+img.f-left {
+    left: 0px;
+    position: absolute;
+}
+
+img.f-right {
+    right: 0px;
+    position: absolute;
+}
+
+div.username {
+    padding-left: 35px;
+    position: relative;
+}
+
+div.userrole {
+    padding: 5px 5px 5px 35px;
+    background-color: #139952;
+    color: #f0f0f0;
+    font-size: small;
+    height: 12px;
+    line-height: 12px;
+    margin-top: 1px;
+}

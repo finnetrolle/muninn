@@ -1,0 +1,12 @@
+<div class="toolbox_data_container  shadowed" ng-show="toolboxPressedButton === 'layers'">
+
+    <div class="ch_title">Слои</div>
+    <div class="toolbox_data_elements_container">
+        <div class="basemap_element" ng-click="setBasemap({tname:t.name})" ng-repeat="t in tilesArray"
+             ng-class="{ 'ch_active' : tiles.name !== t.name, 'ch_highlighted' : tiles.name === t.name }">
+            <img ng-src="{{ t.icon }}">
+            {{ t.name }}
+        </div>
+    </div>
+
+</div>

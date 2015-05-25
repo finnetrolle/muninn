@@ -1,0 +1,14 @@
+<div style="background-color: #0078A8; border: solid 1px #003c57; padding: 5px; color: whitesmoke">
+
+    <div style="cursor: pointer; padding: 5px; background-color: #d073a4; text-align: right"
+         ng-click="showList = !showList">Заценить Список паверсорсов
+    </div>
+
+    <power-sources-list power-sources="powerSources" ng-show="showList" method="goToPowerSource(psid)"
+                        selected-power-source="selectedPowerSource" selected-documents="selectedDocuments"
+                        selected-attributes="selectedAttributes" >
+    </power-sources-list>
+
+
+
+</div>

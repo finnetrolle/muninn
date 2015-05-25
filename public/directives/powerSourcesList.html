@@ -1,0 +1,35 @@
+<div ng-repeat="power in powerSources">
+    <div style="border: solid 0.5px #31bc74; padding: 5px; margin-top: 5px; line-height: 34px; cursor: pointer;"
+         ng-click="method({psid:power.id})"
+         ng-class="{ 'highlighted' : selectedPowerSource.id === power.id , 'usual' : selectedPowerSource.id !== power.id}">
+        <img src="{{ power.iconUrl }}"> {{ power.name }} {{ power.power }}
+        <div ng-show="selectedPowerSource.id === power.id">
+            <power-source-info-panel documents="selectedDocuments"
+                                     attributes="selectedAttributes" ps="selectedPowerSource"
+                                     show-panel="true">
+            </power-source-info-panel>
+        </div>
+    </div>
+</div>
+
+<div style="border: solid 1px black; max-height: 600px; padding-top: 5px; padding-bottom: 5px;" class="scrollme" ng-scrollbar rebuild-on-resize>
+    <div style="border: solid 1px black; background-color: darkorange; padding: 5px; margin-bottom: 5px;">Hello!
+        <div style="position: relative; left: -200px; border: solid 1px black;">
+            <p>Some text</p>
+            <p>Some text</p>
+            <p>Some text</p>
+            <p>Some text</p>
+        </div>
+    </div>
+    <div style="width: 100%; border: solid 1px black; background-color: darkorange; padding: 5px; margin-bottom: 5px;">Hello!
+        <div style="position: relative; left: -200px; border: solid 1px black; display: none;">
+            <p>Some text</p>
+            <p>Some text</p>
+            <p>Some text</p>
+            <p>Some text</p>
+        </div>
+    </div>
+
+</div>
+
+

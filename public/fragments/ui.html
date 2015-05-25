@@ -1,0 +1,49 @@
+<div style="background-color: #0078A8; border: solid 1px #003c57; padding: 5px; color: whitesmoke">
+    <!--<power-source-baloon powerSource="powerSource" documents="documents" attributes="attributes"></power-source-baloon>-->
+    <power-source-info-panel documents="selectedDocuments"
+                             attributes="selectedAttributes" ps="selectedPowerSource"
+                             show-panel="showAdditionalPowerSourceInfoPanel && showAdditionalPanel">
+    </power-source-info-panel>
+    <div style="cursor: pointer; width: 100%; padding: 5px; background-color: #0073a4" ng-click="showAdditionalPanel = !showAdditionalPanel">Заценять второе окно</div>
+</div>
+
+<br/>
+
+<div style="background-color: #0078A8; border: solid 1px #003c57; padding: 5px; color: whitesmoke;">
+    <div ng-show="showLegendPanel">
+        <div style="border: solid 1px lavenderblush; color: lavenderblush; background-color: #009cd5">
+            <img src="img/center_open_035.png"> Открытые
+        </div>
+        <div style="border: solid 1px lavenderblush; color: lavenderblush; background-color: #009cd5">
+            <img src="img/center_limited_035.png"> Открытые с ограничением
+        </div>
+        <div style="border: solid 1px lavenderblush; color: lavenderblush; background-color: #009cd5">
+            <img src="img/center_closed_035.png"> Закрытые
+        </div>
+        <div style="border: solid 1px lavenderblush; color: lavenderblush; background-color: #009cd5">
+            <img src="img/center_open-rec_035.png"> Планируемые к реконструкции
+        </div>
+        <div style="border: solid 1px lavenderblush; color: lavenderblush; background-color: #009cd5">
+            <img src="img/center_build_035.png"> Планируемые к строительству
+        </div>
+    </div>
+    <div style="cursor: pointer; width: 100%; padding: 5px; background-color: #0073a4" ng-click="showLegendPanel = !showLegendPanel">Заценить легенду</div>
+</div>
+
+<br/>
+
+<div style="background-color: #0078A8; border: solid 1px #003c57; padding: 5px; color: whitesmoke;">
+    <div ng-show="showBasemapSelector">
+        <div style="border: none; color: lavenderblush; margin-bottom: 5px; padding: 5px;"
+             ng-class="{'highlighted' : tiles.name === 'OSM', 'usual' : tiles.name !== 'OSM'}"
+             ng-click="setBasemap('OSM')">
+            OSM
+        </div>
+        <div style="border: none; color: lavenderblush; margin-bottom: 5px; padding: 5px;"
+             ng-class="{'highlighted' : tiles.name === 'cycle', 'usual' : tiles.name !== 'cycle'}"
+             ng-click="setBasemap('cycle')">
+            Хрень
+        </div>
+    </div>
+    <div style="cursor: pointer; width: 100%; padding: 5px; background-color: #0073a4" ng-click="showBasemapSelector = !showBasemapSelector">Заценить смену бейзмапов</div>
+</div>

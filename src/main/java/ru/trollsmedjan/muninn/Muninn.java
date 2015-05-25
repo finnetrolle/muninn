@@ -17,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CsrfFilter;
 import ru.trollsmedjan.muninn.filters.CsrfHeaderFilter;
+import ru.trollsmedjan.muninn.helpers.ExcelParser;
 import ru.trollsmedjan.muninn.model.Company;
 import ru.trollsmedjan.muninn.model.PowerSource;
 import ru.trollsmedjan.muninn.model.User;
@@ -52,9 +53,14 @@ public class Muninn implements CommandLineRunner {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private ExcelParser excelParser;
+
     @Override
     public void run(String... strings) throws Exception {
 
+//        uncomment this string to insert xls file into db
+//        excelParser.parse("c:\\dev\\out.xls");
 
 //        Company company = userDao.findOne("admin@mail.ru").getCompany();
 //        for (int i = 0; i < 15; ++i) {

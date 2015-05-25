@@ -1,0 +1,151 @@
+<leaflet widht="100%"
+         height="100%"
+         center="initialCenter"
+         markers="viewModel.powerSources"
+         defaults="defaults"
+         tiles="viewModel.tiles">
+</leaflet>
+
+<!--<div style="position: absolute; bottom: 25px; right: 10px;">-->
+    <!--<input type="button" ng-click="startDrawPolygon()" value="Put polygon"> <br/>-->
+    <!--<input type="button" ng-click="startDrawPoint()" value="Put point">-->
+<!--</div>-->
+
+<!--<div style="position: absolute; bottom: 10px; left: 10px; width: 262px;">-->
+
+<!--<div ng-include src="'fragments/ui.html'"></div>-->
+
+<!--</div>-->
+
+<!--<div style="position: absolute; top: 10px; right: 10px; width:350px;">-->
+
+<!--<div ng-include src="'fragments/powerSourcesListUI.html'"></div>-->
+
+<!--</div>-->
+
+<!-- Button for list-->
+<div class="toolbar_button pos_list shadowed" ng-click="ui.showPowerSourcesList = !ui.showPowerSourcesList"
+    ng-class=" { 'ch_pressed' : ui.showPowerSourcesList === true, 'ch_active' : ui.showPowerSourcesList === false} ">
+    <img class="button" src="img/icon_powersource.png">
+    Источники питания
+    <img class="arrow" src="img/arrow.png">
+</div>
+
+<!-- Button for auth -->
+<!--<div class="toolbar_button pos_auth shadowed" ng-click="ui.showAuthPanel = !ui.showAuthPanel"-->
+     <!--ng-class=" { 'ch_pressed' : ui.showAuthPanel === true, 'ch_active' : ui.showAuthPanel === false} ">-->
+    <!--<img class="button" src="img/icon_user.png">-->
+    <!--Авторизация-->
+    <!--<img class="arrow" src="img/arrow.png">-->
+<!--</div>-->
+
+<!-- List -->
+<div class="list_container shadowed" ng-show="ui.showPowerSourcesList">
+    <div class="list_search_container">
+        <img src="img/icon_search_active.png" class="list_search_button">
+        <input type="text" placeholder="Название источника питания" class="list_search_input" ng-change="filterPowerSourcesList()" ng-model="ui.searchInputString">
+    </div>
+    <div class="list_scrollbar_area">
+        <div class="list_element_container" ng-repeat="e in viewModel.powerSources">
+
+            <div class="list_element_item"
+                 ng-class=" { 'list_element_item_active' : e.id === ui.selectedPowerSourceId, 'list_element_item_usual' : e.id !== ui.selectedPowerSourceId } "
+                 ng-click="setActiveElement(e.id)">
+                <img src="img/center_open_035.png"/>
+                {{ e.name }}
+            </div>
+
+            <div ng-show="e.id === ui.selectedPowerSourceId && ui.showStandalonePanel === false">
+                <power-source-info-panel documents="viewModel.selected.documents"
+                                         attributes="viewModel.selected.attributes" ps="viewModel.selected.powerSource"
+                                         show-panel="true">
+                </power-source-info-panel>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- LowerDown Panel Buttons -->
+<div class="toolbox_container shadowed">
+    <img src="img/icon_zoom_plus.png" class="toolbox_button" ng-click="zoomMap(1)"/>
+    <img src="img/icon_zoom_minus.png" class="toolbox_button" ng-click="zoomMap(-1)"/>
+
+    <div style="display: block; background-color: transparent; width: 30px; height: 3px;">&nbsp;</div>
+    <img ng-click="pressToolboxButton('legend')" ng-src="{{ ui.toolbox.legendButtonSrc }}" class="toolbox_button"/>
+    <img ng-click="pressToolboxButton('layers')" ng-src="{{ ui.toolbox.layersButtonSrc }}" class="toolbox_button"/>
+    <img ng-click="alert('ololo')" src="img/icon_help_active.png" class="toolbox_button"/>
+</div>
+
+<div class="toolbox_helper_button_legend" ng-show="ui.toolbox.legendButtonSrc === 'img/icon_legend_pressed.png'">
+    &nbsp;
+</div>
+
+<div class="toolbox_helper_button_layers" ng-show="ui.toolbox.layersButtonSrc === 'img/icon_layers_pressed.png'">
+    &nbsp;
+</div>
+
+<!-- Toolbox Legend Container-->
+<!--<toolbox-legend-container toolbox-pressed-button="toolboxPressedButton"></toolbox-legend-container>-->
+<div class="toolbox_data_container shadowed" ng-show="ui.toolbox.pressedButton === 'legend'">
+    <div class="ch_title">Легенда</div>
+    <div class="toolbox_data_elements_container">
+        <div class="layer_element">
+            <img src="img/icon_checkbox.png">
+            <img src="img/icon_ps_build.png">
+            Открытые
+        </div>
+        <div class="layer_element">
+            <img src="img/icon_checkbox_pressed.png">
+            <img src="img/icon_ps_build.png"> Открытые с ограничением
+        </div>
+        <div class="layer_element">
+            <img src="img/icon_checkbox_checked.png">
+            <img src="img/icon_ps_build.png"> Закрытые
+        </div>
+        <div class="layer_element">
+            <img src="img/icon_checkbox_checked_pressed.png">
+            <img src="img/icon_ps_build.png"> Планируемые к реконструкции
+        </div>
+        <div class="layer_element">
+            <img src="img/icon_checkbox.png">
+            <img src="img/icon_ps_build.png"> Планируемые к строительству
+        </div>
+    </div>
+</div>
+
+<!-- Toolbox Layers Container -->
+<!--<toolbox-layers-container toolbox-pressed-button="toolboxPressedButton"-->
+<!--tiles-array="tilesArray"-->
+<!--set-basemap="setBasemap(tname)"-->
+<!--tiles="tiles"></toolbox-layers-container>-->
+<div class="toolbox_data_container  shadowed" ng-show="ui.toolbox.pressedButton === 'layers'">
+
+    <div class="ch_title">Слои</div>
+    <div class="toolbox_data_elements_container">
+        <div class="basemap_element" ng-click="setBasemap(t.name)" ng-repeat="t in viewModel.tilesArray"
+             ng-class="{ 'ch_active' : tiles.name !== t.name, 'ch_highlighted' : tiles.name === t.name }">
+            <img ng-src="{{ t.icon }}">
+            {{ t.name }}
+        </div>
+    </div>
+
+</div>
+
+<!-- PS Info floating -->
+<div class="floating_panel">
+    <div style="width: 300px; border-left: solid 1px #139952;" ng-show="viewModel.selected.powerSource !== null && ui.showStandalonePanel">
+        <div class="ch_title">
+            {{ viewModel.selected.powerSource.name }}
+        </div>
+        <power-source-info-panel documents="viewModel.selected.documents"
+                                 attributes="viewModel.selected.attributes" ps="viewModel.selected.powerSource"
+                                 show-panel="true" >
+        </power-source-info-panel>
+    </div>
+    <div class="standalone_helper_positioning" ng-click="ui.showStandalonePanel = !ui.showStandalonePanel"
+         ng-show="ui.showPowerSourcesList">
+        <img ng-src="{{ ui.showStandalonePanel === true && 'img/list_arrow_close.png' || 'img/list_arrow_open.png' }}">
+    </div>
+</div>
+
