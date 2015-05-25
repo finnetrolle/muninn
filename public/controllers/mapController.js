@@ -5,12 +5,13 @@
 cheetahApp.controller('mapController',
         [   '$scope', 'leafletEvents',
             'leafletData', 'editableEventingService', '$rootScope',
-            'iconService', 'universalFilterService', 'tilesService', 'markerAdapterService', 'restConnector',
+            'universalFilterService', 'tilesService', 'markerAdapterService', 'restConnector',
             function ($scope, leafletEvents,
                       leafletData, editableEventingService, $rootScope,
-                      iconService, filter, tilesService, markerAdapterService, restConnector) {
+                      filter, tilesService, markerAdapterService, restConnector) {
 
-                restConnector.setCompanyId('a991709d-8bbc-409f-ba25-81e69647abd7');
+                //restConnector.setCompanyId('a991709d-8bbc-409f-ba25-81e69647abd7'); // work
+                restConnector.setCompanyId('5c9a8644-6de0-4257-aa0e-55f063acd94d'); // home
 
                 $scope.ui = {
                     showPowerSourcesList: false,
