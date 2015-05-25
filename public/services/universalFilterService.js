@@ -18,17 +18,21 @@ cheetahApp.service('universalFilterService', [function () {
             this.minimalFilterStringLength = minimalFilterStringLength;
         },
 
+        _returnOnEmptyFilterString: function(unfilteredMap) {
+            if (this.alwaysCreateNewMap == true) {
+                var result = {};
+                for (key in unfilteredMap) {
+                    result[key] = unfilteredMap[key];
+                }
+                return result;
+            } else {
+                return unfilteredMap;
+            }
+        },
+
         filter: function(unfilteredMap, filterString, fields) {
             if (filterString == null || filterString == undefined || filterString.length < this.minimalFilterStringLength) {
-                if (this.alwaysCreateNewMap == true) {
-                    var result = {};
-                    for (key in unfilteredMap) {
-                        result[key] = unfilteredMap[key];
-                    }
-                    return result;
-                } else {
-                    return unfilteredMap;
-                }
+                return this._returnOnEmptyFilterString(unfilteredMap);
             }
 
             var regExp = new RegExp(filterString, "i");
