@@ -126,8 +126,9 @@ var mapController = cheetahApp.controller('mapController',
                     $scope.ui.selectedPowerSourceId = id;
                     $scope.viewModel.selected.powerSource = $scope.model.powerSources['' + id];
                     powerSourceService.getPowerSource(id).then(function (data) {
-                        $scope.viewModel.selected.attributes = data.attributes;
-                        $scope.viewModel.selected.documents = data.documents;
+                        $scope.viewModel.selected.attributes = data;
+                        //$scope.viewModel.selected.attributes = data.attributes;
+                        //$scope.viewModel.selected.documents = data.documents;
                     });
 
                     // center map

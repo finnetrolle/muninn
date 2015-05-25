@@ -7,22 +7,29 @@ cheetahApp.service('powerSourceService', ["$http", "iconService", function ($htt
     var powerSourceService = {
 
         getPowerSource: function (id) {
-            var promise = $http.get('http://trollsmedjan.ru:8080/burst/rest_read_attributes',
-                {
-                    params: {psId: id}
-                })
+            //var promise = $http.get('http://trollsmedjan.ru:8080/burst/rest_read_attributes',
+            //    {
+            //        params: {psId: id}
+            //    })
+            //    .then(function (response) {
+            //
+            //        return response.data;
+            //    });
+            //return promise;
+            var promise = $http.get('attribute/' + id,{})
                 .then(function (response) {
-
                     return response.data;
                 });
             return promise;
         },
 
         getPowerSourcesMarkers: function () {
-            var promise = $http.get('http://trollsmedjan.ru:8080/burst/rest_read_powersources')
+            //var promise = $http.get('http://trollsmedjan.ru:8080/burst/rest_read_powersources')
+            var promise = $http.get('/powersource/a466ce29-90b6-4d8e-baeb-69716d7807e4')
                 .then(function (response) {
                     var markers = {};
-                    var src = response.data.powerSources;
+                    //var src = response.data.powerSources;
+                    var src = response.data;
                     for (var i = 0; i < src.length; ++i) {
                         var marker = iconService.createMarker(src[i]);
                         markers['' + src[i].id] = marker;

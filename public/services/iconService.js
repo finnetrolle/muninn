@@ -68,8 +68,13 @@ cheetahApp.service('iconService', [function () {
             var lng = this.getRandomArbitary(29.0, 31.0);
             var lat = this.getRandomArbitary(59.0, 61.0);
             if (data.location != null) {
-                lng= data.location.coordinates[0];
-                lat= data.location.coordinates[1];
+                //lng= data.location.coordinates[0];
+                //lat= data.location.coordinates[1];
+                //lng= data.location.x;
+                //lat= data.location.y;
+                var latlng = L.Projection.Mercator.unproject(L.point(data.location.x, data.location.y));
+                lng = latlng.lng;
+                lat = latlng.lat;
             };
             // =================================================
 
