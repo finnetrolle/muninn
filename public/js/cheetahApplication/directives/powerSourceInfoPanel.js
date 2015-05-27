@@ -5,7 +5,7 @@
 cheetahApp.directive("powerSourceInfoPanel", function () {
     return {
         restrict: 'AE',
-        templateUrl: 'directives/powerSourceInfoPanel.html',
+        templateUrl: 'views/directives/powerSourceInfoPanel.html',
         scope: {
             ps: "=",
             attributes: "=",

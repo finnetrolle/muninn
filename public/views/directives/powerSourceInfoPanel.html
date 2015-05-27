@@ -1,14 +1,11 @@
-<!--<div class="leaflet-container psinfo">-->
 <div class="leaflet-container psinfo" ng-show="showPanel" >
     <!--<div class="psinfoTitle">-->
         <!--{{ ps.name }}-->
     <!--</div>-->
-
     <div class="psinfoContainer">
         <div class="psinfoContainerTitle">
             Общая информация
         </div>
-
         <table class="psinfo">
             <tr>
                 <td class="psinfoName">Класс напряжения:</td>
@@ -28,21 +25,18 @@
             </tr>
         </table>
     </div>
-
     <div class="psinfoContainer">
         <div class="psinfoContainerTitle">
             Документы
         </div>
-
         <table class="psinfo">
             <tr ng-repeat="d in documents">
                 <td>
-                    <a target="_blank" class="psinfo" href="{{ d.link }}'/>">
+                    <a target="_blank" class="psinfo" href="{{ d.link }}">
                         {{ d.name }}
                     </a>
                 </td>
             </tr>
         </table>
     </div>
-
 </div>

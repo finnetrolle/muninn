@@ -8,7 +8,7 @@ cheetahApp.config(function ($routeProvider) {
     $routeProvider
 
         .when("/", {
-            templateUrl: 'fragments/map.html',
+            templateUrl: 'views/map.html',
             controller: 'mapController'
         })
 });
