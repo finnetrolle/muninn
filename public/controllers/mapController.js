@@ -10,8 +10,8 @@ cheetahApp.controller('mapController',
                       leafletData, editableEventingService, $rootScope,
                       filter, tilesService, markerAdapterService, restConnector) {
 
-                //restConnector.setCompanyId('a991709d-8bbc-409f-ba25-81e69647abd7'); // work
-                restConnector.setCompanyId('5c9a8644-6de0-4257-aa0e-55f063acd94d'); // home
+                restConnector.setCompanyId('a991709d-8bbc-409f-ba25-81e69647abd7'); // work
+                //restConnector.setCompanyId('5c9a8644-6de0-4257-aa0e-55f063acd94d'); // home
 
                 $scope.ui = {
                     showPowerSourcesList: false,
