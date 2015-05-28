@@ -28,7 +28,12 @@ cheetahApp.service('markerAdapterService', ["$http", function ($http) {
                 name: powerSource.name,
                 power: powerSource.power,
                 load: powerSource.load,
-                message: "<div ng-include src=\"'fragments/powerSourceBaloon.html'\"></div>",
+                message: "<div ng-include src=\"'views/powerSourceBaloon.html'\"></div>",
+                //message: '<power-source-info-panel ' +
+                //         'documents="viewModel.selected.documents" ' +
+                //         'attributes="viewModel.selected.attributes" ' +
+                //         'ps="viewModel.selected.powerSource" ' +
+                //         'show-panel="true" ></power-source-info-panel>',
                 compileMessage: true,
                 focus: false,
                 active: false,
@@ -43,7 +48,6 @@ cheetahApp.service('markerAdapterService', ["$http", function ($http) {
                 },
                 polygon: powerSource.polygon
             };
-            console.log(marker);
             return marker;
         },
 

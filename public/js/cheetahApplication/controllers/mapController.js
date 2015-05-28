@@ -13,6 +13,11 @@ cheetahApp.controller('mapController',
                 restConnector.setCompanyId('a991709d-8bbc-409f-ba25-81e69647abd7'); // work
                 //restConnector.setCompanyId('5c9a8644-6de0-4257-aa0e-55f063acd94d'); // home
 
+                $scope.messaging = {
+                    attributesLoaded: false,
+                    documentsLoaded: false
+                };
+
                 $scope.ui = {
                     showPowerSourcesList: false,
                     showStandalonePanel: false,
@@ -92,8 +97,15 @@ cheetahApp.controller('mapController',
 
                     $scope.ui.selectedPowerSourceId = id;
                     $scope.viewModel.selected.powerSource = $scope.model.powerSources['' + id];
+
                     restConnector.getAttributes(id).success(function(attributes){
                         $scope.viewModel.selected.attributes = attributes;
+                        $scope.$emit('attributesLoaded');
+                    });
+
+                    restConnector.getDocuments(id).success(function(documents){
+                        $scope.viewModel.selected.documents = documents;
+                        $scope.$emit('documentsLoaded');
                     });
 
                     // center map
@@ -102,6 +114,26 @@ cheetahApp.controller('mapController',
                         $scope.initialCenter.lng = $scope.viewModel.selected.powerSource.lng;
                     }
                 };
+
+                $scope.$on('attributesLoaded', function(event, args){
+                    $scope.messaging.attributesLoaded = true;
+                    if ($scope.messaging.documentsLoaded == true) {
+                        $scope.$emit('powersourceloaded');
+                    }
+                });
+
+                $scope.$on('documentsLoaded', function(event, args){
+                    $scope.messaging.documentsLoaded = true;
+                    if ($scope.messaging.attributesLoaded == true) {
+                        $scope.$emit('powersourceloaded');
+                    }
+                });
+
+                $scope.$on('powersourceloaded', function(event, args){
+                    $rootScope.$emit('markerselected', $scope.viewModel.selected);
+                    $scope.messaging.attributesLoaded = false;
+                    $scope.messaging.documentsLoaded = false;
+                });
 
                 /**
                  *
@@ -186,6 +218,10 @@ cheetahApp.controller('mapController',
                 //});
 
                 $scope.$on('leafletDirectiveMarker.popupopen', function (event, args) {
+                    var psId = args.model.id;
+                    $scope.setActiveElement(psId);
+
+
                     //modelService.popuppedMarkerId = args.model.id;
                     //modelService.getPowerSource(args.model.id);
                 });

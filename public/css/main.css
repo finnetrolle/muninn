@@ -101,6 +101,7 @@ div.list_container {
     bottom: 25px;
     width: 350px;
     border: solid 1px #2fa566;
+    z-index: 100;
 }
 
 div.list_scrollbar_area {
@@ -140,6 +141,7 @@ div.toolbar_button {
     line-height: 30px;
     color: #f0f0f0;
     padding-left: 40px;
+    z-index: 100;
 }
 
 div.pos_list {
@@ -191,6 +193,7 @@ div.toolbox_container {
     opacity: 0.9;
     border: solid 1px #2fa566;
     padding: 3px;
+    z-index: 100;
 
 }
 
@@ -208,7 +211,7 @@ div.toolbox_helper_button_legend {
     background: #f0f0f0;
     width: 6px;
     height: 30px;
-    z-index: 100;
+    z-index: 101;
 }
 
 div.toolbox_helper_button_layers {
@@ -220,7 +223,7 @@ div.toolbox_helper_button_layers {
     background: #f0f0f0;
     width: 6px;
     height: 30px;
-    z-index: 100;
+    z-index: 101;
 }
 
 div.toolbox_data_container {
@@ -229,6 +232,7 @@ div.toolbox_data_container {
     bottom: 10px;
     width: 300px;
     min-height: 97px;
+    z-index: 100;
 }
 
 div.toolbox_data_elements_container {
@@ -263,11 +267,12 @@ div.floating_panel {
     top: 30%;
     bottom: 30%;
     right: 360px;
+    z-index: 100;
 }
 
 div.standalone_helper_positioning {
     position: absolute;
-    z-index: 100;
+    z-index: 101;
     top: 40%;
     width: 16px;
     height: 30px;

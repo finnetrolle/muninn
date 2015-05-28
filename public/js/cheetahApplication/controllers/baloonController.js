@@ -2,16 +2,17 @@
  * Created by syachin on 06.05.2015.
  */
 cheetahApp.controller('baloonController',
-    ['$scope', 'powerSourceService', 'modelService',
-        function ($scope, powerSourceService, modelService) {
+    ['$scope', '$rootScope',
+        function ($scope, $rootScope) {
 
-            var psid = modelService.popuppedMarkerId;
-
-            var pss = modelService.getPowerSource(psid)
-                .then(function(data){
-                    $scope.powerSource = data.powerSource;
-                    $scope.attributes = data.attributes;
-                    $scope.documents = data.documents;
+            $rootScope.$on('markerselected', function(event, selected){
+                $scope.powerSource = selected.powerSource;
+                $scope.attributes = selected.attributes;
+                $scope.documents = selected.documents;
+                console.log('message markerselected recieved');
+                console.log($scope.powerSource);
+                console.log($scope.attributes);
+                console.log($scope.documents);
             });
 
         }]);
