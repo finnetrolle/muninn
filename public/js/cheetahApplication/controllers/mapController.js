@@ -13,6 +13,8 @@ cheetahApp.controller('mapController',
                 restConnector.setCompanyId('a991709d-8bbc-409f-ba25-81e69647abd7'); // work
                 //restConnector.setCompanyId('5c9a8644-6de0-4257-aa0e-55f063acd94d'); // home
 
+                $scope.baloonHtml = 'views/powerSourceBaloon.html';
+
                 $scope.messaging = {
                     attributesLoaded: false,
                     documentsLoaded: false
@@ -24,7 +26,7 @@ cheetahApp.controller('mapController',
                     showAuthPanel: false,
                     searchInputString: '',
                     selectedPowerSourceId: 0,
-                    centerMapOnSelectPowerSource: true,
+                    centerMapOnSelectPowerSource: false,
 
                     toolbox: {
                         legendButtonSrc: 'img/icon_legend.png',
@@ -84,6 +86,15 @@ cheetahApp.controller('mapController',
                     }
                 };
 
+                $scope.moveCenterTo = function(lat, lng) {
+                    var initialCenter = {
+                        lat: lat,
+                        lng: lng,
+                        zoom: $scope.initialCenter.zoom
+                    };
+                    $scope.initialCenter = initialCenter;
+                };
+
                 $scope.setActiveElement = function (id) {
                     if ($scope.viewModel.selected.powerSource != null) {
                         $scope.viewModel.selected.powerSource = null;
@@ -110,8 +121,7 @@ cheetahApp.controller('mapController',
 
                     // center map
                     if ($scope.ui.centerMapOnSelectPowerSource) {
-                        $scope.initialCenter.lat = $scope.viewModel.selected.powerSource.lat;
-                        $scope.initialCenter.lng = $scope.viewModel.selected.powerSource.lng;
+                        $scope.moveCenterTo($scope.viewModel.selected.powerSource.lat, $scope.viewModel.selected.powerSource.lng);
                     }
                 };
 

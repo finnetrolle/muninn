@@ -1,5 +1,5 @@
 <div class="psinfo" ng-controller="baloonController">
-    <div class="psinfoTitle">
+    <div class="ch_title">
         {{ powerSource.name }}
     </div>
 
@@ -27,22 +27,20 @@
         </table>
     </div>
 
-    <!--<div class="psinfoContainer">-->
-    <!--<div class="psinfoContainerTitle">-->
-    <!--Документы-->
-    <!--</div>-->
-
-    <!--<table class="psinfo">-->
-    <!--<c:forEach var="document" items="${documents}">-->
-    <!--<tr>-->
-    <!--<td>-->
-    <!--<a target="_blank" class="psinfo" href="<c:out value='${document.link}'/>">-->
-    <!--<c:out value="${document.name}"/>-->
-    <!--</a>-->
-    <!--</td>-->
-    <!--</tr>-->
-    <!--</c:forEach>-->
-    <!--</table>-->
-    <!--</div>-->
+    <div class="psinfoContainer">
+        <div class="psinfoContainerTitle">
+            Документы
+        </div>
+        <table class="psinfo">
+            <tr ng-repeat="d in documents">
+                <td>
+                    <a target="_blank" class="psinfo" href="{{ d.link }}">
+                        {{ d.name }}
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
 
 </div>
+
