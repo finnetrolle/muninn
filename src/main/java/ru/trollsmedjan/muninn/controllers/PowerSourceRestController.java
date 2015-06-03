@@ -41,9 +41,11 @@ public class PowerSourceRestController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/{id}/addpolygon")
     public void addPolygon(@PathVariable Long id, @RequestBody Polygon polygon) {
+        System.out.println(polygon);
         PowerSource powerSource = powerSourceDao.findOne(id);
         powerSource.setPolygon(polygon);
         powerSourceDao.save(powerSource);
+
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/{id}/movelocation")

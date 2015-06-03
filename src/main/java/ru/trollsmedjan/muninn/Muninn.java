@@ -61,6 +61,7 @@ public class Muninn implements CommandLineRunner {
 
 //        uncomment this string to insert xls file into db
 //        excelParser.parse("c:\\dev\\out_clean.xls");
+//        excelParser.parse("c:\\dev\\out_clean_small.xls");
 
 //        Company company = userDao.findOne("admin@mail.ru").getCompany();
 //        for (int i = 0; i < 15; ++i) {

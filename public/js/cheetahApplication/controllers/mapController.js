@@ -10,7 +10,7 @@ cheetahApp.controller('mapController',
                       leafletData, editableEventingService, $rootScope,
                       filter, tilesService, markerAdapterService, restConnector) {
 
-                restConnector.setCompanyId('a991709d-8bbc-409f-ba25-81e69647abd7'); // work
+                restConnector.setCompanyId('fbc0ff94-e8d0-430e-878f-41fc83b745ed'); // work
                 //restConnector.setCompanyId('5c9a8644-6de0-4257-aa0e-55f063acd94d'); // home
 
                 $scope.baloonHtml = 'views/powerSourceBaloon.html';
@@ -47,7 +47,8 @@ cheetahApp.controller('mapController',
                     },
                     powerSources: [],
                     tilesArray: tilesService.tilesArray,
-                    tiles: null
+                    tiles: null,
+                    geojson: null
                 };
 
                 /**
@@ -185,6 +186,7 @@ cheetahApp.controller('mapController',
 
                     leafletData.getMap().then(function(map){
                         $scope.map = map;
+                        editableEventingService.initEvents($scope.map, $scope);
                     });
 
 
@@ -192,6 +194,8 @@ cheetahApp.controller('mapController',
                     $scope.events = {
                         markers: {enable: leafletEvents.getAvailableMarkerEvents()}
                     };
+
+
 
                     $scope.initialCenter = {
                         lat: 59.95,
@@ -241,10 +245,15 @@ cheetahApp.controller('mapController',
                 });
 
                 $scope.$on('leafletDirectiveMarker.mouseover', function (event, args) {
+                    console.log('mouseOver');
+                    $scope.viewModel.geojson = $scope.model.powerSources[args.model.id].polygon;
+                    console.log($scope.model.powerSources[args.model.id].polygon);
                     //modelService.showHighlightedLayer(args.model.id);
                 });
 
                 $scope.$on('leafletDirectiveMarker.mouseout', function (event, args) {
+                    console.log('mouseOut');
+                    $scope.viewModel.geojson = null;
                     //modelService.hideHighlightedLayer();
                 });
 
@@ -255,14 +264,24 @@ cheetahApp.controller('mapController',
 
                 $scope.$on('editable:drawing:end', function (event, args) {
                     console.log('editable:drawing:end');
-                    console.log(args);
+                    console.log($scope.viewModel.polygon);
+                    restConnector.postNewPolygon($scope.viewModel.selected.powerSource.id,
+                        markerAdapterService.createRestPolygon($scope.viewModel.polygon));
                 });
 
-                $scope.startDrawPolygon = function () {
+                $scope.$on('editable:shape:new', function(event, args) {
+                    console.log('editable:shape:new');
+                    $scope.viewModel.polygon = args.shape[0];
+                    console.log(args.shape);
+                });
+
+                $scope.startDrawPolygon = function (id) {
+                    console.log(id);
                     $scope.map.editTools.startPolygon();
                 };
 
-                $scope.startDrawPoint = function () {
+                $scope.startDrawPoint = function (id) {
+                    console.log(id);
                     $scope.map.editTools.startMarker();
                 };
 

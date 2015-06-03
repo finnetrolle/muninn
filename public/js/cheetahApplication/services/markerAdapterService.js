@@ -10,16 +10,16 @@ cheetahApp.service('markerAdapterService', ["$http", function ($http) {
 
     var markerAdapterService = {
 
-        _convertXYToLatLng: function(x, y) {
+        _convertXYToLatLng: function (x, y) {
             return L.Projection.Mercator.unproject(L.point(x, y));
         },
 
-        _generateIconName: function(power, load, status) {
+        _generateIconName: function (power, load, status) {
             // Todo fix this to normal generator
             return "img/center_open_035.png";
         },
 
-        _buildMarker: function(powerSource) {
+        _buildMarker: function (powerSource) {
             var latlng = this._convertXYToLatLng(powerSource.location.x, powerSource.location.y);
             var marker = {
                 lng: latlng.lng,
@@ -46,12 +46,31 @@ cheetahApp.service('markerAdapterService', ["$http", function ($http) {
                     shadowSize: [0, 0],
                     shadowAnchor: [0, 0]
                 },
-                polygon: powerSource.polygon
+                polygon: this._createLeafletPolygon(powerSource.polygon)
             };
             return marker;
         },
 
-        createMarkers: function(powerSourcesArray) {
+        _createLeafletPolygon: function (restPolygon) {
+            if (restPolygon == null) {
+                return restPolygon;
+            }
+            var geojson = {
+                data: this._createGeoJson(restPolygon),
+                style: {
+                    fillColor: "green",
+                    weight: 2,
+                    opacity: 1,
+                    color: 'white',
+                    dashArray: '3',
+                    fillOpacity: 0.7
+                }
+            };
+
+            return geojson;
+        },
+
+        createMarkers: function (powerSourcesArray) {
             var result = {};
 
             for (var i = 0; i < powerSourcesArray.length; ++i) {
@@ -60,6 +79,46 @@ cheetahApp.service('markerAdapterService', ["$http", function ($http) {
             }
 
             return result;
+        },
+
+        createRestPolygon: function (leafletPolygon) {
+            var polygonToSend = {};
+            polygonToSend.points = [];
+            for (var i = 0; i < leafletPolygon.length; ++i) {
+                var point = {};
+                point.x = leafletPolygon[i].lat;
+                point.y = leafletPolygon[i].lng;
+                polygonToSend.points.push(point);
+            }
+            return polygonToSend;
+        },
+
+        _createGeoJson: function (restPolygon) {
+            var geojson =
+            {
+                "type": "FeatureCollection",
+                "features": [
+                    {
+                        "type": "Feature",
+                        "id": "USA",
+                        "properties": {"name": "United States of America"},
+                        "geometry": {
+                            "type": "Polygon",
+                            "coordinates": []
+                        }
+                    }
+                ]
+            };
+            var ring = [];
+            geojson.features[0].geometry.coordinates.push(ring);
+
+            for (var i = 0; i < restPolygon.points.length; ++i) {
+                var point = [];
+                point.push(restPolygon.points[i].x);
+                point.push(restPolygon.points[i].y);
+                ring.push(point);
+            }
+            return geojson;
         }
 
     };

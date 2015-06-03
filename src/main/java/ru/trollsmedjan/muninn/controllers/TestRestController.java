@@ -1,5 +1,7 @@
 package ru.trollsmedjan.muninn.controllers;
 
+import org.springframework.data.geo.Point;
+import org.springframework.data.geo.Polygon;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +21,13 @@ public class TestRestController {
         model.put("id", UUID.randomUUID().toString());
         model.put("content", "Hello, World!");
         return model;
+    }
+
+    @RequestMapping("/polygon")
+    public @ResponseBody
+    Polygon testPolygon() {
+        Polygon polygon = new Polygon(new Point(1, 2), new Point(3, 4), new Point(5, 6));
+        return polygon;
     }
 
 

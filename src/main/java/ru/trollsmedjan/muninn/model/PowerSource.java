@@ -24,7 +24,8 @@ public class PowerSource {
 
     private double usedPower;
 
-    @Transient
+    @Lob
+    @Column(name="area_polygon", columnDefinition="blob")
     private Polygon polygon = null;
 
 //    @Transient
