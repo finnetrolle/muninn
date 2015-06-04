@@ -48,7 +48,8 @@ cheetahApp.controller('mapController',
                 powerSources: [],
                 tilesArray: tilesService.tilesArray,
                 tiles: null,
-                geojson: null
+                geojson: null,
+                editMode: null
             };
 
             /**
@@ -187,6 +188,11 @@ cheetahApp.controller('mapController',
                 leafletData.getMap().then(function (map) {
                     $scope.map = map;
                     editableEventingService.initEvents($scope.map, $scope);
+
+                    var mapEvents = leafletEvents.getAvailableMapEvents();
+                    for (var k in mapEvents){
+                        console.log('event: ' + mapEvents[k]);
+                    }
                 });
 
 
@@ -251,27 +257,46 @@ cheetahApp.controller('mapController',
             });
 
             $scope.$on('editable:drawing:start', function (event, args) {
+                console.log('editable:drawing:start');
             });
 
             $scope.$on('editable:drawing:end', function (event, args) {
-                restConnector.postNewPolygon($scope.viewModel.selected.powerSource.id,
-                    markerAdapterService.createRestPolygon($scope.viewModel.polygon))
-                        .success(function(data){
+                console.log('editable:drawing:end');
+
+                if ($scope.viewModel.editMode == 'polygon') {
+                    restConnector.postNewPolygon($scope.viewModel.selected.powerSource.id,
+                        markerAdapterService.createRestPolygon($scope.viewModel.polygon))
+                        .success(function (data) {
+                            $scope.viewModel.editMode = null;
                             $scope.updatePowerSources();
                         });
+                };
+
+                if ($scope.viewModel.editMode == 'point') {
+                    console.log('point event');
+                    console.log(event);
+                    console.log(args);
+                    restConnector.postNewPoint($scope.viewModel.selected.powerSource.id,
+                        markerAdapterService.createRestPoint($scope.viewModel.polygon))
+                        .success(function (data) {
+                            $scope.viewModel.editMode = null;
+                            $scope.updatePowerSources();
+                        });
+                };
             });
 
             $scope.$on('editable:shape:new', function (event, args) {
+                console.log('editable:shape:new');
                 $scope.viewModel.polygon = args.shape[0];
             });
 
             $scope.startDrawPolygon = function (id) {
-                console.log(id);
+                $scope.viewModel.editMode = 'polygon';
                 $scope.map.editTools.startPolygon();
             };
 
             $scope.startDrawPoint = function (id) {
-                console.log(id);
+                $scope.viewModel.editMode = 'point';
                 $scope.map.editTools.startMarker();
             };
 

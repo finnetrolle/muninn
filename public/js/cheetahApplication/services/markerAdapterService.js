@@ -93,6 +93,13 @@ cheetahApp.service('markerAdapterService', ["$http", function ($http) {
             return polygonToSend;
         },
 
+        createRestPoint: function (leafletPoint) {
+            var point = {};
+            point.x = leafletPoint.lat;
+            point.y = leafletPoint.lng;
+            return point;
+        },
+
         _createGeoJson: function (restPolygon) {
             var geojson =
             {
