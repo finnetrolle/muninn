@@ -100,8 +100,7 @@ cheetahApp.service('markerAdapterService', ["$http", function ($http) {
                 "features": [
                     {
                         "type": "Feature",
-                        "id": "USA",
-                        "properties": {"name": "United States of America"},
+                        "properties": {},
                         "geometry": {
                             "type": "Polygon",
                             "coordinates": []
@@ -114,10 +113,14 @@ cheetahApp.service('markerAdapterService', ["$http", function ($http) {
 
             for (var i = 0; i < restPolygon.points.length; ++i) {
                 var point = [];
-                point.push(restPolygon.points[i].x);
                 point.push(restPolygon.points[i].y);
+                point.push(restPolygon.points[i].x);
                 ring.push(point);
             }
+            var point = [];
+            point.push(restPolygon.points[0].y);
+            point.push(restPolygon.points[0].x);
+            ring.push(point);
             return geojson;
         }
 

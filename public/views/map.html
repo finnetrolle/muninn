@@ -9,7 +9,7 @@
 
 <div style="display: none" ng-include='baloonHtml'></div>
 
-<div style="position: absolute; bottom: 25px; right: 10px; z-index: 105;">
+<div style="position: absolute; bottom: 25px; right: 10px; z-index: 105;" ng-show="viewModel.selected.powerSource!=null">
     <input type="button" ng-click="startDrawPolygon()" value="Put polygon"> <br/>
     <input type="button" ng-click="startDrawPoint()" value="Put point">
 </div>
